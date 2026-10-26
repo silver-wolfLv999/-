@@ -23,6 +23,7 @@ namespace 顏色魔術
         int Score = 0;
         int MaxB = 9;
         int Time = 60;
+        int history = 0;
 
         Button[] buttons = new Button[4];
 
@@ -169,6 +170,9 @@ namespace 顏色魔術
                 button.Click -= btn_TClick;
 
             Time = 60;
+            if (history < Score)
+                history = Score;
+                label2.Text = $"history   {history}";
             Score = 0;
             n = 2;
             r = R.Next(0, 255);

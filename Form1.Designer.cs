@@ -42,6 +42,7 @@
             time = new Label();
             timer1 = new System.Windows.Forms.Timer(components);
             label1 = new Label();
+            label2 = new Label();
             SuspendLayout();
             // 
             // start
@@ -131,7 +132,7 @@
             // score
             // 
             score.AutoSize = true;
-            score.Location = new Point(1, 18);
+            score.Location = new Point(1, 27);
             score.Name = "score";
             score.Size = new Size(46, 19);
             score.TabIndex = 9;
@@ -160,11 +161,21 @@
             label1.TabIndex = 11;
             label1.Text = "label1";
             // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(0, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(57, 19);
+            label2.TabIndex = 12;
+            label2.Text = "history";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(9F, 19F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(time);
             Controls.Add(score);
@@ -199,5 +210,6 @@
         private Label time;
         private System.Windows.Forms.Timer timer1;
         private Label label1;
+        private Label label2;
     }
 }
