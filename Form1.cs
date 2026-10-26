@@ -22,6 +22,7 @@ namespace 顏色魔術
         int n_next;
         int Score = 0;
         int MaxB = 9;
+        int Time = 60;
 
         Button[] buttons = new Button[4];
 
@@ -53,25 +54,30 @@ namespace 顏色魔術
 
         private void start_Click(object sender, EventArgs e)
         {
+            timer1.Start();
+            start.Enabled = false;
             score.Text = $"score   {Score}";
-                            
+            time.Text = $"time   {Time}";
             m = ans.Next(0, n * n);
             c = C.Next(c_min, c_max + 1);
+
             if ((b + c) > 255)
                 buttons[m].BackColor = Color.FromArgb(r, g, b - c);
             else
                 buttons[m].BackColor = Color.FromArgb(r, g, b + c);
 
+            label1.Text = $"({m / n} ,{m % n}) \n({buttons[m].BackColor.R},{buttons[m].BackColor.G},{buttons[m].BackColor.B})";
             buttons[m].Click += new EventHandler(btn_TClick);
         }
         void btn_TClick(object sender, EventArgs e)
         {
             Score++;
             score.Text = $"score   {Score}";
-            
+
             createBtn();
-            
+
             m = ans.Next(0, n * n);
+            label1.Text = $"({m / n} ,{m % n}) \n({buttons[m].BackColor.R},{buttons[m].BackColor.G},{buttons[m].BackColor.B})";
             if ((b + c) > 255)
                 buttons[m].BackColor = Color.FromArgb(r, g, b - c);
             else
@@ -142,7 +148,7 @@ namespace 顏色魔術
             else
                 c_min = 50;
 
-            if (c_min >c_max)
+            if (c_min > c_max)
             {
                 int t = c_min;
                 c_min = c_max;
@@ -155,14 +161,41 @@ namespace 顏色魔術
 
         private void reset_Click(object sender, EventArgs e)
         {
-            MaxB = 9;
-            textBox1.Text = MaxB.ToString();
+            timer1.Stop();
+            for (int i = 0; i < n * n; i++)
+                this.Controls.Remove(buttons[i]);
 
-            c_max = 90;
-            textBox2.Text = c_max.ToString();
+            foreach (Button button in buttons)
+                button.Click -= btn_TClick;
 
-            c_min = 50;
-            textBox3.Text = c_min.ToString();
+            Time = 60;
+            Score = 0;
+            n = 2;
+            r = R.Next(0, 255);
+            g = G.Next(0, 255);
+            b = B.Next(0, 255);
+
+            time.Text = $"time   {Time}";
+            score.Text = $"score   {Score}";
+            label1.Text = "";
+
+            buttons = new Button[n * n];
+
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    buttons[i * n + j] = new Button();
+                    buttons[i * n + j].Name = "button" + (i * n + j);
+                    buttons[i * n + j].Text = "";
+                    buttons[i * n + j].Size = new Size(400 / n, 400 / n);
+                    buttons[i * n + j].BackColor = Color.FromArgb(r, g, b);
+                    buttons[i * n + j].Location = new Point(150 + j * 400 / n, i * 400 / n);
+                    buttons[i * n + j].Click += new EventHandler(btn_Click);
+                }
+            }
+            this.Controls.AddRange(buttons);
+            start.Enabled = true;
         }
 
         private void textBox1_Click(object sender, EventArgs e)
@@ -178,6 +211,14 @@ namespace 顏色魔術
         private void textBox3_Click(object sender, EventArgs e)
         {
             textBox3.Focus();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            Time--;
+            time.Text = $"time   {Time}";
+            if (Time <= 0)
+                reset_Click(sender ,e);
         }
     }
 }

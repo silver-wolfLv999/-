@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             start = new Button();
             set = new Button();
             reset = new Button();
@@ -39,6 +40,8 @@
             textBox3 = new TextBox();
             score = new Label();
             time = new Label();
+            timer1 = new System.Windows.Forms.Timer(components);
+            label1 = new Label();
             SuspendLayout();
             // 
             // start
@@ -143,11 +146,26 @@
             time.TabIndex = 10;
             time.Text = "time";
             // 
+            // timer1
+            // 
+            timer1.Interval = 1000;
+            timer1.Tick += timer1_Tick;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(1, 384);
+            label1.Name = "label1";
+            label1.Size = new Size(51, 19);
+            label1.TabIndex = 11;
+            label1.Text = "label1";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(9F, 19F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(label1);
             Controls.Add(time);
             Controls.Add(score);
             Controls.Add(textBox3);
@@ -179,5 +197,7 @@
         private TextBox textBox3;
         private Label score;
         private Label time;
+        private System.Windows.Forms.Timer timer1;
+        private Label label1;
     }
 }
